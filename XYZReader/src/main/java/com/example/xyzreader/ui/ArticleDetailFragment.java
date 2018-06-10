@@ -10,8 +10,6 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ShareCompat;
 import android.support.v4.widget.NestedScrollView;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -91,11 +89,6 @@ public class ArticleDetailFragment extends Fragment implements
         nestedScrollView.setVisibility(View.GONE);
 
 
-        Toolbar toolbar = (Toolbar) mRootView.findViewById(R.id.toolbar);
-        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false);
-
         mPhotoView = (ImageView) mRootView.findViewById(R.id.photo);
 
 
@@ -125,14 +118,12 @@ public class ArticleDetailFragment extends Fragment implements
             mRootView.setVisibility(View.VISIBLE);
             mRootView.animate().alpha(1);
             String title = mCursor.getString(ArticleLoader.Query.TITLE);
-            if(title != null){
+            if (title != null) {
             }
-
-            ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(title);
 
 
             String bodyText = mCursor.getString(ArticleLoader.Query.BODY);
-            Log.i("ArticleDetailFragment", bodyText);
+            //Log.i("ArticleDetailFragment", bodyText);
             bodyTextView.setText(Html.fromHtml(bodyText.replaceAll("(\r\n|\n)", "<br />")));
             ImageLoaderHelper.getInstance(getActivity()).getImageLoader()
                     .get(mCursor.getString(ArticleLoader.Query.PHOTO_URL), new ImageLoader.ImageListener() {
@@ -154,7 +145,7 @@ public class ArticleDetailFragment extends Fragment implements
             progressBar.setVisibility(View.GONE);
 
             NestedScrollView nestedScrollView = (NestedScrollView) mRootView.findViewById(R.id.nestedScrollViewDetail);
-            nestedScrollView .setVisibility(View.VISIBLE);
+            nestedScrollView.setVisibility(View.VISIBLE);
 
 
         } else {
