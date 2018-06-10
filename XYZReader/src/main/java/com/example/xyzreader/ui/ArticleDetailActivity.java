@@ -10,6 +10,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v13.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -55,18 +56,6 @@ public class ArticleDetailActivity extends AppCompatActivity
         mPager.setPageMarginDrawable(new ColorDrawable(0x22000000));
 
 
-        mToolbar = (Toolbar) findViewById(R.id.toolbarDetail);
-        setSupportActionBar(mToolbar);
-
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
-
-        } else {
-            Log.e("ActionDetailActivity", "SupportActionBar == null!!!");
-        }
-
-
         if (savedInstanceState == null) {
             if (getIntent() != null && getIntent().getData() != null) {
                 mStartId = ItemsContract.Items.getItemId(getIntent().getData());
@@ -97,6 +86,19 @@ public class ArticleDetailActivity extends AppCompatActivity
                 mCursor.moveToNext();
             }
             mStartId = 0;
+        }
+
+        mToolbar = (Toolbar) findViewById(R.id.toolbarDetail);
+        setSupportActionBar(mToolbar);
+
+
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setDisplayShowHomeEnabled(true);
+            actionBar.setDisplayShowTitleEnabled(false);
+        } else {
+            Log.e("ActionDetailActivity", "SupportActionBar == null!!!");
         }
     }
 

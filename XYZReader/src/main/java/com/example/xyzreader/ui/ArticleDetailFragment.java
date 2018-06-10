@@ -10,6 +10,9 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ShareCompat;
 import android.support.v4.widget.NestedScrollView;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -114,16 +117,21 @@ public class ArticleDetailFragment extends Fragment implements
         TextView bodyTextView = (TextView) mRootView.findViewById(R.id.body_text);
 
         if (mCursor != null) {
-            mRootView.setAlpha(0);
-            mRootView.setVisibility(View.VISIBLE);
-            mRootView.animate().alpha(1);
             String title = mCursor.getString(ArticleLoader.Query.TITLE);
             if (title != null) {
+                ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+                if (actionBar == null) {
+                    Toolbar mToolbar = (Toolbar) mRootView.findViewById(R.id.toolbarDetail);
+                    ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
+                    actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+                }
+                actionBar.setDisplayShowTitleEnabled(true);
+                actionBar.setTitle(title);
             }
 
 
             String bodyText = mCursor.getString(ArticleLoader.Query.BODY);
-            //Log.i("ArticleDetailFragment", bodyText);
+            Log.i("ArticleDetailFragment", "Body Text is loaded");
             bodyTextView.setText(Html.fromHtml(bodyText.replaceAll("(\r\n|\n)", "<br />")));
             ImageLoaderHelper.getInstance(getActivity()).getImageLoader()
                     .get(mCursor.getString(ArticleLoader.Query.PHOTO_URL), new ImageLoader.ImageListener() {
